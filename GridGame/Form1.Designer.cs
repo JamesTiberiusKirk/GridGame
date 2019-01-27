@@ -28,20 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.exitBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // exitBtn
+            // 
+            this.exitBtn.Location = new System.Drawing.Point(21, 385);
+            this.exitBtn.Name = "exitBtn";
+            this.exitBtn.Size = new System.Drawing.Size(75, 23);
+            this.exitBtn.TabIndex = 0;
+            this.exitBtn.Text = "Exit";
+            this.exitBtn.UseVisualStyleBackColor = true;
+            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
             // 
             // GridGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.exitBtn);
             this.Name = "GridGame";
-            this.Text = "Form1";
+            this.Text = "GridGame";
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Button exitBtn;
     }
 }
 

@@ -15,6 +15,18 @@ namespace GridGame
         public GridGame()
         {
             InitializeComponent();
+
+            Button[,] btnGrid = new Button[4,4];
+
+            foreach (Button tmpBtn in btnGrid)
+            {
+            }
+
+        }
+
+        private void exitBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
