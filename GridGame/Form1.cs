@@ -17,6 +17,10 @@ namespace GridGame
         public GridGame()
         {
             InitializeComponent();
+        }
+        
+        void LoadGrid()
+        {
             for (int x = 0; x < btn.GetLength(0); x++)
             {
                 for (int y = 0; y<btn.GetLength(1); y++)
@@ -28,8 +32,9 @@ namespace GridGame
                     Controls.Add(btn[x, y]);
                 }
             }
+
         }
-        
+
         void BtnEvent_Click(object sender, EventArgs e)
         {
             Console.WriteLine(((Button)sender).Text);
@@ -38,6 +43,11 @@ namespace GridGame
         private void exitBtn_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void GridGame_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
