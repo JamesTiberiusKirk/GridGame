@@ -16,6 +16,14 @@ namespace GridGame
         private Button[,] btn;
         private int lives = 3;
         private int score = 0;
+
+        //difficulty int and game state
+        //  0 = easy
+        //  1 = medium
+        //  2 = hard
+        //  3 = game not running (in the timer)
+        //  4 = before the grid was initialised
+        private int diff = 4;
         
         public GridGame()
         {
@@ -24,6 +32,7 @@ namespace GridGame
        
         void LoadGrid(object sender, EventArgs e)
         {
+            diff = 3; //when game isnt running before the timer
             for (int x = 0; x < btn.GetLength(0); x++)
             {
                 for (int y = 0; y < btn.GetLength(1); y++)
@@ -33,6 +42,7 @@ namespace GridGame
                     //btn[x, y].Text = Convert.ToString((x + 1) + "," + (y + 1));
                     btn[x, y].Click += new EventHandler(this.BtnEvent_Click);
                     Controls.Add(btn[x, y]);
+                    btn[x, y].FlatStyle = FlatStyle.Flat;
                 }
             }
 
@@ -88,9 +98,12 @@ namespace GridGame
             btn[x, y].Click += new EventHandler(this.RandButton_Click);
         }
 
+
+        //Any button click (Fron the grid)
         void BtnEvent_Click(object sender, EventArgs e)
         {
             ((Button)sender).BackColor = Color.Red;
+            
             lives--;
             LblLivesCounter.Text = lives.ToString();
 
@@ -101,6 +114,7 @@ namespace GridGame
             }
         }
 
+        //The event handler for the correct button click
         void RandButton_Click(object sender, EventArgs e)
         {
             ((Button)sender).BackColor = Color.LightGreen;
@@ -117,13 +131,24 @@ namespace GridGame
 
         private void GridGame_Load(object sender, EventArgs e)
         {
-            LoadGrid();
             RandButton();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
+       
+
+            /*switch (diff)
+            {
+                case 0: //easy
+                    break;
+                case 1: //medium
+                    break;
+                case 2: //hard
+                    break;
+                case 3: //waiting period
+                    break;
+            }*/
+
+
+
     }
 }
