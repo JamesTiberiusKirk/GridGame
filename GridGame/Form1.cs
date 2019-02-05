@@ -14,6 +14,8 @@ namespace GridGame
     {
 
         private Random rnd = new Random();
+        private TextBox userNameBox;
+        private Button nameSubmit;
         private Button[,] btn;
         private int lives = 3;
         private int score = 0;
@@ -47,7 +49,6 @@ namespace GridGame
                 }
             }
             //diff = 3; //when game isnt running before the timer
-
             ToolStripMenuItem b = (ToolStripMenuItem)sender;
             switch (b.Text) {
                 case "Easy":
@@ -66,8 +67,11 @@ namespace GridGame
                     Console.WriteLine("somehow nothing was passed");
                     break;
             }
-            
-            
+            timer(5);            
+        }
+
+        void timer(int s){
+
         }
 
         void cleanGrid(){
@@ -168,7 +172,7 @@ namespace GridGame
             if (lives == 0)
             {
                 MessageBox.Show("GAME OVER");
-                Close();
+                askUserName();
             }
         }
 
@@ -187,6 +191,14 @@ namespace GridGame
             Close();
         }
 
+
+        private void askUserName(){
+
+        }
+
+        private void writeScoreToFile(){
+
+        }
             /*switch (diff)
             {
                 case 0: //easy
