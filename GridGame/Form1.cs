@@ -13,12 +13,15 @@ namespace GridGame
     public partial class GridGame : Form
     {
 
+        private textBoxForm userNameForm = new textBoxForm();
+
         private Random rnd = new Random();
         private TextBox userNameBox;
-        private Button nameSubmit;
         private Button[,] btn;
         private int lives = 3;
         private int score = 0;
+
+        public static string userName;
 
         //difficulty int and game state
         //  0 = easy
@@ -80,7 +83,8 @@ namespace GridGame
             {
                 for (int y = 0; y<btn.GetLength(1); y++)
                 {
-                    btn[x,y].Location = new Point(-100,-100);
+                    //btn[x,y].Location = new Point(-100,-100); // nonononnonononononnonono
+                    btn[x,y].Hide();
                 }
             }
         }
@@ -161,7 +165,7 @@ namespace GridGame
         }
 
 
-        //Any button click (Fron the grid)
+        //Any button click (From the grid)
         void BtnEvent_Click(object sender, EventArgs e)
         {
             ((Button)sender).BackColor = Color.Red;
@@ -193,7 +197,12 @@ namespace GridGame
 
 
         private void askUserName(){
+            userNameForm.Show();
+        }
 
+        public void setUserName(string userNameParam)
+        {
+            userName = userNameParam;
         }
 
         private void writeScoreToFile(){
