@@ -13,6 +13,7 @@ namespace GridGame
     public partial class GridGame : Form
     {
 
+        private Random rnd = new Random();
         private Button[,] btn;
         private int lives = 3;
         private int score = 0;
@@ -22,9 +23,10 @@ namespace GridGame
         //  1 = medium
         //  2 = hard
         //  3 = game not running (in the timer)
-        //  4 = before the grid was initialised
+        //  4 = before the grid was initialised (no grid)
         private int diff = 4;
         
+
         public GridGame()
         {
             InitializeComponent();
@@ -32,46 +34,31 @@ namespace GridGame
        
         void LoadGrid(object sender, EventArgs e)
         {
-            diff = 3; //when game isnt running before the timer
-            for (int x = 0; x < btn.GetLength(0); x++)
-            {
-                for (int y = 0; y < btn.GetLength(1); y++)
+            //TODO: if for is the game is already running
+            if (diff!=4){
+                if (MessageBox.Show("A Game is alreaady Running. Restart?", "Confirm", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    btn[x, y] = new Button();
-                    btn[x, y].SetBounds(50 * x, 50 * y, 50, 50);
-                    //btn[x, y].Text = Convert.ToString((x + 1) + "," + (y + 1));
-                    btn[x, y].Click += new EventHandler(this.BtnEvent_Click);
-                    Controls.Add(btn[x, y]);
-                    btn[x, y].FlatStyle = FlatStyle.Flat;
+                    cleanGrid();
+                }
+                else
+                {
+                    return;
                 }
             }
+            //diff = 3; //when game isnt running before the timer
 
-            Random rnd = new Random();
-            Button b = (Button)sender;
+            ToolStripMenuItem b = (ToolStripMenuItem)sender;
             switch (b.Text) {
                 case "Easy":
-                    btn = new Button[4, 4];
-                    //Colours
-                    Color[] colours = new Color[4];
-
-                    colours[0] = Color.Goldenrod;
-                    colours[1] = Color.MediumOrchid;
-                    colours[2] = Color.CornflowerBlue;
-                    colours[3] = Color.Coral;
-                    for (int x = 0; x < btn.GetLength(0); x++)
-                    {
-                        for (int y = 0; y<btn.GetLength(1); y++)
-                        {
-                            btn[x, y].BackColor = colours[rnd.Next(0, 4)];
-                        }
-                    }
+                    loadEasy();
                     break;
                 case "Medium":
-                    btn = new Button[6, 6];
+                    loadMedium(); 
                     //Images
                     break;
-                case "Expert":
-                    btn = new Button[10, 10];
+                case "Hard":
+                    loadHard();
                     //Numbers
                     break;
                 default:
@@ -81,6 +68,77 @@ namespace GridGame
             }
             
             
+        }
+
+        void cleanGrid(){
+            //MessageBox.Show("Cleaning Grid");
+            for (int x = 0; x < btn.GetLength(0); x++)
+            {
+                for (int y = 0; y<btn.GetLength(1); y++)
+                {
+                    btn[x,y].Location = new Point(-100,-100);
+                }
+            }
+        }
+
+        void loadEasy(){
+            diff = 0;
+            //Colours
+            Color[] colours = new Color[4];
+            colours[0] = Color.Goldenrod;
+            colours[1] = Color.MediumOrchid;
+            colours[2] = Color.CornflowerBlue;
+            colours[3] = Color.Coral;
+            btn = new Button[4,4];
+            for (int x = 0; x < btn.GetLength(0); x++)
+            {
+                for (int y = 0; y<btn.GetLength(1); y++)
+                {
+                    btn[x, y] = new Button();
+                    btn[x, y].SetBounds(50+100 * x, 50+100 * y, 100, 100);
+                    btn[x, y].Click += new EventHandler(this.BtnEvent_Click);
+                    Controls.Add(btn[x, y]);
+                    btn[x, y].FlatStyle = FlatStyle.Flat;
+                    btn[x, y].BackColor = colours[rnd.Next(0, 4)];
+                }
+            }
+        }
+
+        void loadMedium(){
+            diff = 1;
+
+            btn = new Button[6, 6];
+            for (int x = 0; x < btn.GetLength(0); x++)
+            {
+                for (int y = 0; y<btn.GetLength(1); y++)
+                {
+                    btn[x, y] = new Button();
+                    btn[x, y].SetBounds(50+75 * x, 50+75 * y, 75, 75);
+                    btn[x, y].Click += new EventHandler(this.BtnEvent_Click);
+                    Controls.Add(btn[x, y]);
+                    btn[x, y].FlatStyle = FlatStyle.Flat;
+
+                    btn[x, y].Text = rnd.Next(10, 99).ToString();
+                }
+            }
+        }
+
+        void loadHard(){
+            diff = 2;
+            btn = new Button[9, 9];
+            for (int x = 0; x < btn.GetLength(0); x++)
+            {
+                for (int y = 0; y<btn.GetLength(1); y++)
+                {
+                    btn[x, y] = new Button();
+                    btn[x, y].SetBounds(50+50 * x, 50+50 * y, 50, 50);
+                    btn[x, y].Click += new EventHandler(this.BtnEvent_Click);
+                    Controls.Add(btn[x, y]);
+                    btn[x, y].FlatStyle = FlatStyle.Flat;
+
+                    btn[x, y].Text = rnd.Next(100, 999).ToString();
+                }
+            }
         }
 
         void RandButton()
@@ -128,13 +186,6 @@ namespace GridGame
         {
             Close();
         }
-
-        private void GridGame_Load(object sender, EventArgs e)
-        {
-            RandButton();
-        }
-
-       
 
             /*switch (diff)
             {

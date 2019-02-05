@@ -38,14 +38,16 @@
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.easyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mediumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnExit
             // 
+            this.BtnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnExit.Font = new System.Drawing.Font("Copperplate Gothic Bold", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnExit.Location = new System.Drawing.Point(22, 737);
+            this.BtnExit.Location = new System.Drawing.Point(995, 919);
             this.BtnExit.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.BtnExit.Name = "BtnExit";
             this.BtnExit.Size = new System.Drawing.Size(161, 72);
@@ -56,9 +58,10 @@
             // 
             // LblLivesTitle
             // 
+            this.LblLivesTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LblLivesTitle.AutoSize = true;
             this.LblLivesTitle.Font = new System.Drawing.Font("Copperplate Gothic Bold", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblLivesTitle.Location = new System.Drawing.Point(953, 49);
+            this.LblLivesTitle.Location = new System.Drawing.Point(983, 84);
             this.LblLivesTitle.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.LblLivesTitle.Name = "LblLivesTitle";
             this.LblLivesTitle.Size = new System.Drawing.Size(123, 34);
@@ -67,9 +70,10 @@
             // 
             // LblLivesCounter
             // 
+            this.LblLivesCounter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LblLivesCounter.AutoSize = true;
             this.LblLivesCounter.Font = new System.Drawing.Font("Copperplate Gothic Bold", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblLivesCounter.Location = new System.Drawing.Point(1093, 49);
+            this.LblLivesCounter.Location = new System.Drawing.Point(1123, 84);
             this.LblLivesCounter.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.LblLivesCounter.Name = "LblLivesCounter";
             this.LblLivesCounter.Size = new System.Drawing.Size(36, 34);
@@ -78,9 +82,10 @@
             // 
             // LblScoreTitle
             // 
+            this.LblScoreTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LblScoreTitle.AutoSize = true;
             this.LblScoreTitle.Font = new System.Drawing.Font("Copperplate Gothic Bold", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblScoreTitle.Location = new System.Drawing.Point(1164, 49);
+            this.LblScoreTitle.Location = new System.Drawing.Point(962, 38);
             this.LblScoreTitle.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.LblScoreTitle.Name = "LblScoreTitle";
             this.LblScoreTitle.Size = new System.Drawing.Size(144, 34);
@@ -89,9 +94,10 @@
             // 
             // LblScoreCounter
             // 
+            this.LblScoreCounter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LblScoreCounter.AutoSize = true;
             this.LblScoreCounter.Font = new System.Drawing.Font("Copperplate Gothic Bold", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblScoreCounter.Location = new System.Drawing.Point(1325, 49);
+            this.LblScoreCounter.Location = new System.Drawing.Point(1123, 38);
             this.LblScoreCounter.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.LblScoreCounter.Name = "LblScoreCounter";
             this.LblScoreCounter.Size = new System.Drawing.Size(36, 34);
@@ -106,7 +112,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1467, 38);
+            this.menuStrip1.Size = new System.Drawing.Size(1170, 38);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -123,9 +129,10 @@
             // 
             this.startToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.easyToolStripMenuItem,
-            this.mediumToolStripMenuItem});
+            this.mediumToolStripMenuItem,
+            this.hardToolStripMenuItem});
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(288, 34);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(146, 34);
             this.startToolStripMenuItem.Text = "Start";
             // 
             // easyToolStripMenuItem
@@ -142,10 +149,17 @@
             this.mediumToolStripMenuItem.Text = "Medium";
             this.mediumToolStripMenuItem.Click += new System.EventHandler(this.LoadGrid);
             // 
+            // hardToolStripMenuItem
+            // 
+            this.hardToolStripMenuItem.Name = "hardToolStripMenuItem";
+            this.hardToolStripMenuItem.Size = new System.Drawing.Size(181, 34);
+            this.hardToolStripMenuItem.Text = "Hard";
+            this.hardToolStripMenuItem.Click += new System.EventHandler(this.LoadGrid);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(288, 34);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 34);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.BtnExit_Click);
             // 
@@ -153,7 +167,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1467, 830);
+            this.ClientSize = new System.Drawing.Size(1170, 1006);
             this.Controls.Add(this.LblScoreCounter);
             this.Controls.Add(this.LblScoreTitle);
             this.Controls.Add(this.LblLivesCounter);
@@ -164,7 +178,6 @@
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "GridGame";
             this.Text = "GridGame";
-            this.Load += new System.EventHandler(this.GridGame_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -185,6 +198,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem easyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mediumToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hardToolStripMenuItem;
     }
 }
 
