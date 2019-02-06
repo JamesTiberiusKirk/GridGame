@@ -15,24 +15,32 @@ Some Code Sources
 https://docs.microsoft.com/en-us/dotnet/api/system.io.filestream?redirectedfrom=MSDN&view=netframework-4.7.2
 https://stackoverflow.com/questions/6153074/how-do-i-write-data-to-a-text-file-in-c
 https://stackoverflow.com/questions/1140383/how-can-i-get-the-current-user-directory
-
+http://www.newthinktank.com/2017/03/c-tutorial-17/
 */
+
+
+//TODO: cleanup code
+//TODO: cleanup comments
+//TODO: Make the timer
+//TODO:     Make sure user can only click buttons after the timer has finished
+//TODO: Make another form to display the scores
+
 
 namespace GridGame
 {
     public partial class GridGame : Form
     {
+        public const string scoreFile = "GridGameScore.txt";
         private const int livesC = 3;//when lives reset, 
         //we can just use this constand change this if it needs to be changed in the future
 
         private textBoxForm userNameForm = new textBoxForm();
 
         private Random rnd = new Random();
-        private TextBox userNameBox;
         private Button[,] btn;
         private int lives = livesC;
         private static int score = 0;
-
+        private static string difficulty;
         public static string userName;
 
         //difficulty int and game state
@@ -51,7 +59,7 @@ namespace GridGame
        
         private void LoadGrid(object sender, EventArgs e)
         {
-            //TODO: if for is the game is already running
+
             if (diff!=4){
                 if (MessageBox.Show("A Game is alreaady Running. \n Do you want to restart?", "Confirm", 
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -66,7 +74,8 @@ namespace GridGame
             }
             //diff = 3; //when game isnt running before the timer
             ToolStripMenuItem b = (ToolStripMenuItem)sender;
-            switch (b.Text) {
+            difficulty = b.Text;
+            switch (difficulty) {
                 case "Easy":
                     loadEasy();
                     break;
@@ -218,28 +227,39 @@ namespace GridGame
             userNameForm.Show();
         }
 
-        //TODO: need to fix this
         public static void writeScoreToFile(){
             string toWrite;
-            toWrite = userName + " with score " + score.ToString() +"\n";
+            toWrite = "\n" + userName + " with score " + score.ToString() +
+                " on " + difficulty +" difficulty";
             MessageBox.Show(toWrite);
             
             string path = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).FullName;
             if ( Environment.OSVersion.Version.Major >= 6 ) 
                 path = Directory.GetParent(path).ToString();
             
-            path += "\\Documents\\GridGameScore.txt";
+            path += "\\Documents\\" + scoreFile;
             
             FileStream fs;
 
             if (!File.Exists(path)){
-                fs=File.Create(path);
+                fs = new FileStream(path, FileMode.Create);
             }else{
-                fs=FileStream(path,FileMode.open,);
+                fs = new FileStream(path,FileMode.Append);
             }
 
-
+            byte[] info = new UTF8Encoding(true).GetBytes(toWrite);
+            //byte[] info = Encoding.Default.GetBytes(toWrite);
+            fs.Write(info, 0, info.Length);
+            /* 
+            // writing data in bytes already
+            byte[] data = new byte[] { 0x0 };
+            fs.Write(data, 0, data.Length);
+            */
+            fs.Flush();
+            fs.Close();
         }
+        
+        //Some code snippiets I was keeping on the sime
             /*switch (diff)
             {
                 case 0: //easy
