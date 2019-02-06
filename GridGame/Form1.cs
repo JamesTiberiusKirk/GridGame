@@ -7,19 +7,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+
+/*
+Some Code Sources
+
+https://docs.microsoft.com/en-us/dotnet/api/system.io.filestream?redirectedfrom=MSDN&view=netframework-4.7.2
+https://stackoverflow.com/questions/6153074/how-do-i-write-data-to-a-text-file-in-c
+https://stackoverflow.com/questions/1140383/how-can-i-get-the-current-user-directory
+
+*/
 
 namespace GridGame
 {
     public partial class GridGame : Form
     {
+        private const int livesC = 3;//when lives reset, 
+        //we can just use this constand change this if it needs to be changed in the future
 
         private textBoxForm userNameForm = new textBoxForm();
 
         private Random rnd = new Random();
         private TextBox userNameBox;
         private Button[,] btn;
-        private int lives = 3;
-        private int score = 0;
+        private int lives = livesC;
+        private static int score = 0;
 
         public static string userName;
 
@@ -37,13 +49,14 @@ namespace GridGame
             InitializeComponent();
         }
        
-        void LoadGrid(object sender, EventArgs e)
+        private void LoadGrid(object sender, EventArgs e)
         {
             //TODO: if for is the game is already running
             if (diff!=4){
-                if (MessageBox.Show("A Game is alreaady Running. Restart?", "Confirm", 
+                if (MessageBox.Show("A Game is alreaady Running. \n Do you want to restart?", "Confirm", 
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
+                    lives = livesC;
                     cleanGrid();
                 }
                 else
@@ -73,11 +86,11 @@ namespace GridGame
             timer(5);            
         }
 
-        void timer(int s){
+        private void timer(int s){
 
         }
 
-        void cleanGrid(){
+        private void cleanGrid(){
             //MessageBox.Show("Cleaning Grid");
             for (int x = 0; x < btn.GetLength(0); x++)
             {
@@ -89,7 +102,7 @@ namespace GridGame
             }
         }
 
-        void loadEasy(){
+        private void loadEasy(){
             diff = 0;
             //Colours
             Color[] colours = new Color[4];
@@ -112,7 +125,7 @@ namespace GridGame
             }
         }
 
-        void loadMedium(){
+        private void loadMedium(){
             diff = 1;
 
             btn = new Button[6, 6];
@@ -131,7 +144,7 @@ namespace GridGame
             }
         }
 
-        void loadHard(){
+        private void loadHard(){
             diff = 2;
             btn = new Button[9, 9];
             for (int x = 0; x < btn.GetLength(0); x++)
@@ -149,7 +162,7 @@ namespace GridGame
             }
         }
 
-        void RandButton()
+        private void RandButton()
         {
             int x = 0;
             int y = 0;
@@ -166,10 +179,12 @@ namespace GridGame
 
 
         //Any button click (From the grid)
-        void BtnEvent_Click(object sender, EventArgs e)
+        private void BtnEvent_Click(object sender, EventArgs e)
         {
+            if (((Button)sender).BackColor==Color.Red){ //if button was already clicked
+                return;
+            }   
             ((Button)sender).BackColor = Color.Red;
-            
             lives--;
             LblLivesCounter.Text = lives.ToString();
 
@@ -181,8 +196,11 @@ namespace GridGame
         }
 
         //The event handler for the correct button click
-        void RandButton_Click(object sender, EventArgs e)
+        private void RandButton_Click(object sender, EventArgs e)
         {
+            if (((Button)sender).BackColor==Color.LightGreen){ //if button was already clicked
+                return;
+            }   
             ((Button)sender).BackColor = Color.LightGreen;
             score++;
             lives++;
@@ -200,12 +218,26 @@ namespace GridGame
             userNameForm.Show();
         }
 
-        public void setUserName(string userNameParam)
-        {
-            userName = userNameParam;
-        }
+        //TODO: need to fix this
+        public static void writeScoreToFile(){
+            string toWrite;
+            toWrite = userName + " with score " + score.ToString() +"\n";
+            MessageBox.Show(toWrite);
+            
+            string path = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).FullName;
+            if ( Environment.OSVersion.Version.Major >= 6 ) 
+                path = Directory.GetParent(path).ToString();
+            
+            path += "\\Documents\\GridGameScore.txt";
+            
+            FileStream fs;
 
-        private void writeScoreToFile(){
+            if (!File.Exists(path)){
+                fs=File.Create(path);
+            }else{
+                fs=FileStream(path,FileMode.open,);
+            }
+
 
         }
             /*switch (diff)
@@ -220,7 +252,31 @@ namespace GridGame
                     break;
             }*/
 
+/*            if (File.Exists(path))
+            {
+                using (var sw = new StreamWriter(path, true))
+                {
+                    byte[] info = new UTF8Encoding(true).GetBytes(toWrite);
+                    fs.Write(info, 0, info.Length);
 
+                    // writing data in bytes already
+                    byte[] data = new byte[] { 0x0 };
+                    fs.Write(data, 0, data.Length);
+                }
+            }
+            else
+            { 
+                using (FileStream fs = File.Create(path))
+                {
+                    byte[] info = new UTF8Encoding(true).GetBytes(toWrite);
+                    fs.Write(info, 0, info.Length);
+
+                    // writing data in bytes already
+                    byte[] data = new byte[] { 0x0 };
+                    fs.Write(data, 0, data.Length);
+                }
+            }
+*/
 
     }
 }

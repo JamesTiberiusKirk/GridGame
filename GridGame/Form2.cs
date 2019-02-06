@@ -20,7 +20,12 @@ namespace GridGame
 
         private void button1_Click(object sender, EventArgs e)
         {
-             GridGame.userName = inpBox.Text;           
+            GridGame.userName = inpBox.Text;
+            this.Close();
+        }
+        private void FormClose(object sender, FormClosedEventArgs e)
+        {
+            GridGame.writeScoreToFile();
         }
     }
 }
