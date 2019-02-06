@@ -16,13 +16,20 @@ https://docs.microsoft.com/en-us/dotnet/api/system.io.filestream?redirectedfrom=
 https://stackoverflow.com/questions/6153074/how-do-i-write-data-to-a-text-file-in-c
 https://stackoverflow.com/questions/1140383/how-can-i-get-the-current-user-directory
 http://www.newthinktank.com/2017/03/c-tutorial-17/
+https://stackoverflow.com/questions/24016638/set-form-location-c-sharp
 */
 
+
+/*
+    06/01/19 - KAYLA CHANGES
+    -changed all grids to be colours instead of numbers, is more aesthetically pleasing and easier for user 
+    -when 'new' button is clicked, new form opens over grid form with blank grid 
+        >this will be changed so that it happens for a certain amount of time instead of when the button is clicked (button will be removed)
+*/
 
 //TODO: cleanup code
 //TODO: cleanup comments
 //TODO: Make the timer
-//TODO:     Make sure user can only click buttons after the timer has finished
 //TODO: Make another form to display the scores
 
 
@@ -55,6 +62,11 @@ namespace GridGame
         public GridGame()
         {
             InitializeComponent();
+
+            this.StartPosition = FormStartPosition.Manual;
+            this.Left = 100;
+            this.Top = 100;
+            
         }
        
         private void LoadGrid(object sender, EventArgs e)
@@ -65,7 +77,7 @@ namespace GridGame
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     lives = livesC;
-                    cleanGrid();
+                    CleanGrid();
                 }
                 else
                 {
@@ -77,14 +89,17 @@ namespace GridGame
             difficulty = b.Text;
             switch (difficulty) {
                 case "Easy":
-                    loadEasy();
+                    LoadEasy();
+                    RandButton();
                     break;
                 case "Medium":
-                    loadMedium(); 
+                    LoadMedium();
+                    RandButton();
                     //Images
                     break;
                 case "Hard":
-                    loadHard();
+                    LoadHard();
+                    RandButton();
                     //Numbers
                     break;
                 default:
@@ -92,14 +107,14 @@ namespace GridGame
                     Console.WriteLine("somehow nothing was passed");
                     break;
             }
-            timer(5);            
+            Timer(5);            
         }
 
-        private void timer(int s){
+        private void Timer(int s){
 
         }
 
-        private void cleanGrid(){
+        private void CleanGrid(){
             //MessageBox.Show("Cleaning Grid");
             for (int x = 0; x < btn.GetLength(0); x++)
             {
@@ -111,7 +126,7 @@ namespace GridGame
             }
         }
 
-        private void loadEasy(){
+        private void LoadEasy(){
             diff = 0;
             //Colours
             Color[] colours = new Color[4];
@@ -134,9 +149,15 @@ namespace GridGame
             }
         }
 
-        private void loadMedium(){
+        private void LoadMedium(){
             diff = 1;
 
+            Color[] colours = new Color[5];
+            colours[0] = Color.Goldenrod;
+            colours[1] = Color.MediumOrchid;
+            colours[2] = Color.CornflowerBlue;
+            colours[3] = Color.Coral;
+            colours[4] = Color.MediumSeaGreen;
             btn = new Button[6, 6];
             for (int x = 0; x < btn.GetLength(0); x++)
             {
@@ -148,13 +169,23 @@ namespace GridGame
                     Controls.Add(btn[x, y]);
                     btn[x, y].FlatStyle = FlatStyle.Flat;
 
-                    btn[x, y].Text = rnd.Next(10, 99).ToString();
+                    // btn[x, y].Text = rnd.Next(10, 99).ToString();
+                    btn[x, y].BackColor = colours[rnd.Next(0, 5)];
                 }
             }
         }
 
-        private void loadHard(){
+        private void LoadHard(){
             diff = 2;
+
+            Color[] colours = new Color[6];
+            colours[0] = Color.Goldenrod;
+            colours[1] = Color.MediumOrchid;
+            colours[2] = Color.CornflowerBlue;
+            colours[3] = Color.Coral;
+            colours[4] = Color.MediumSeaGreen;
+            colours[5] = Color.Firebrick;
+
             btn = new Button[9, 9];
             for (int x = 0; x < btn.GetLength(0); x++)
             {
@@ -166,7 +197,8 @@ namespace GridGame
                     Controls.Add(btn[x, y]);
                     btn[x, y].FlatStyle = FlatStyle.Flat;
 
-                    btn[x, y].Text = rnd.Next(100, 999).ToString();
+                    btn[x, y].BackColor = colours[rnd.Next(0, 6)];
+                    // btn[x, y].Text = rnd.Next(100, 999).ToString();
                 }
             }
         }
@@ -200,7 +232,7 @@ namespace GridGame
             if (lives == 0)
             {
                 MessageBox.Show("GAME OVER");
-                askUserName();
+                AskUserName();
             }
         }
 
@@ -222,12 +254,11 @@ namespace GridGame
             Close();
         }
 
-
-        private void askUserName(){
+        private void AskUserName(){
             userNameForm.Show();
         }
 
-        public static void writeScoreToFile(){
+        public static void WriteScoreToFile(){
             string toWrite;
             toWrite = "\n" + userName + " with score " + score.ToString() +
                 " on " + difficulty +" difficulty";
@@ -258,45 +289,111 @@ namespace GridGame
             fs.Flush();
             fs.Close();
         }
-        
+
+        private void BtnNew_Click(object sender, EventArgs e)
+        {
+            Form newForm = new Form();
+            newForm.Width = this.Width;
+            newForm.Height = this.Height;
+            newForm.StartPosition = FormStartPosition.Manual;
+            newForm.Left = this.Left;
+            newForm.Top = this.Top;
+            newForm.ControlBox = false;
+
+            if (diff == 0)
+            {
+                btn = new Button[4, 4];
+                for (int x = 0; x < btn.GetLength(0); x++)
+                {
+                    for (int y = 0; y < btn.GetLength(1); y++)
+                    {
+                        btn[x, y] = new Button();
+                        btn[x, y].SetBounds(50 + 100 * x, 50 + 100 * y, 100, 100);
+                        newForm.Controls.Add(btn[x, y]);
+                        btn[x, y].FlatStyle = FlatStyle.Flat;
+                        btn[x, y].BackColor = Color.Gray;
+                    }
+                }
+                newForm.ShowDialog();
+            }
+            else if (diff == 1)
+            {
+                btn = new Button[6, 6];
+                for (int x = 0; x < btn.GetLength(0); x++)
+                {
+                    for (int y = 0; y < btn.GetLength(1); y++)
+                    {
+                        btn[x, y] = new Button();
+                        btn[x, y].SetBounds(50 + 75 * x, 50 + 75 * y, 75, 75);
+                        newForm.Controls.Add(btn[x, y]);
+                        btn[x, y].FlatStyle = FlatStyle.Flat;
+                        btn[x, y].BackColor = Color.Gray;
+                    }
+                }
+                newForm.ShowDialog();
+            }
+            else if (diff == 2)
+            {
+                btn = new Button[9, 9];
+                for (int x = 0; x < btn.GetLength(0); x++)
+                {
+                    for (int y = 0; y < btn.GetLength(1); y++)
+                    {
+                        btn[x, y] = new Button();
+                        btn[x, y].SetBounds(50 + 50 * x, 50 + 50 * y, 50, 50);
+                        newForm.Controls.Add(btn[x, y]);
+                        btn[x, y].FlatStyle = FlatStyle.Flat;
+                        btn[x, y].BackColor = Color.Gray;
+                    }
+                }
+                newForm.ShowDialog();
+            }
+
+
+        }
+
         //Some code snippiets I was keeping on the sime
-            /*switch (diff)
-            {
-                case 0: //easy
-                    break;
-                case 1: //medium
-                    break;
-                case 2: //hard
-                    break;
-                case 3: //waiting period
-                    break;
-            }*/
+        /*switch (diff)
+        {
+            case 0: //easy
+                break;
+            case 1: //medium
+                break;
+            case 2: //hard
+                break;
+            case 3: //waiting period
+                break;
+        }*/
 
-/*            if (File.Exists(path))
-            {
-                using (var sw = new StreamWriter(path, true))
-                {
-                    byte[] info = new UTF8Encoding(true).GetBytes(toWrite);
-                    fs.Write(info, 0, info.Length);
+        /*            if (File.Exists(path))
+                    {
+                        using (var sw = new StreamWriter(path, true))
+                        {
+                            byte[] info = new UTF8Encoding(true).GetBytes(toWrite);
+                            fs.Write(info, 0, info.Length);
 
-                    // writing data in bytes already
-                    byte[] data = new byte[] { 0x0 };
-                    fs.Write(data, 0, data.Length);
-                }
-            }
-            else
-            { 
-                using (FileStream fs = File.Create(path))
-                {
-                    byte[] info = new UTF8Encoding(true).GetBytes(toWrite);
-                    fs.Write(info, 0, info.Length);
+                            // writing data in bytes already
+                            byte[] data = new byte[] { 0x0 };
+                            fs.Write(data, 0, data.Length);
+                        }
+                    }
+                    else
+                    { 
+                        using (FileStream fs = File.Create(path))
+                        {
+                            byte[] info = new UTF8Encoding(true).GetBytes(toWrite);
+                            fs.Write(info, 0, info.Length);
 
-                    // writing data in bytes already
-                    byte[] data = new byte[] { 0x0 };
-                    fs.Write(data, 0, data.Length);
-                }
-            }
-*/
+                            // writing data in bytes already
+                            byte[] data = new byte[] { 0x0 };
+                            fs.Write(data, 0, data.Length);
+                        }
+                    }
+        */
+
+
 
     }
+
+ 
 }

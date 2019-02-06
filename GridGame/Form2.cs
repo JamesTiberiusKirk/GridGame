@@ -25,7 +25,7 @@ namespace GridGame
         }
         private void FormClose(object sender, FormClosedEventArgs e)
         {
-            GridGame.writeScoreToFile();
+            GridGame.WriteScoreToFile();
         }
     }
 }
