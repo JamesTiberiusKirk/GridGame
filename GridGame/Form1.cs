@@ -130,6 +130,34 @@ namespace GridGame
 
         }
 
+        System.Windows.Forms.Timer t2;
+        int counter;
+        private void CountdownTimer()
+        {
+            t2 = new System.Windows.Forms.Timer();
+            t2.Tick += new EventHandler(CountdownTimer_Tick);
+            t2.Interval = 1000;
+            t2.Start();
+
+            counter = 5;
+            LblTimer.Text = counter.ToString();
+        }
+
+        private void CountdownTimer_Tick(object sender, EventArgs e)
+        {
+            LblTimer.Show();
+            LblTimerLabel.Show();
+
+            counter--;
+            LblTimer.Text = counter.ToString();
+            if (counter == 0)
+            {
+                t2.Stop();
+                LblTimer.Hide();
+                LblTimerLabel.Hide();
+            }
+        }
+
         private void CleanGrid(){
             //MessageBox.Show("Cleaning Grid");
             for (int x = 0; x < btn.GetLength(0); x++)
@@ -168,6 +196,7 @@ namespace GridGame
             }
             timerRunning = true;
             Timer(5, HideGrid);
+            CountdownTimer();
         } 
         
         //------------------------Different Game Modes---------------------------------
@@ -245,6 +274,7 @@ namespace GridGame
             btn[x, y].Click += new EventHandler(this.RandButton_Click);
             btn[x, y].Click -= BtnEvent_Click;
         }
+
 
         private void AskUserName()
         {
@@ -339,7 +369,7 @@ namespace GridGame
                 }
             }
             newForm.Show(); 
-            Timer(2, new ElapsedEventHandler(RevealGrid));
+            Timer(1, new ElapsedEventHandler(RevealGrid));
         }
 
         //--------------------EVENT HANDLERS-------------------------------------
@@ -369,6 +399,7 @@ namespace GridGame
         private void RevealGrid(object sender, EventArgs e)
         {
             newForm.Hide();
+            newForm = null;
             timerRunning = false;
         }
 
@@ -415,69 +446,5 @@ namespace GridGame
         {
             Close();
         }
-
-        // for creating a form which hides the grid
-        private void BtnNew_Click(object sender, EventArgs e)
-        {
-            Form newForm = new Form();
-            newForm.Width = this.Width;
-            newForm.Height = this.Height;
-            newForm.StartPosition = FormStartPosition.Manual;
-            newForm.Left = this.Left;
-            newForm.Top = this.Top;
-            newForm.ControlBox = false;
-
-            if (diff == 0)
-            {
-                btn = new Button[4, 4];
-                for (int x = 0; x < btn.GetLength(0); x++)
-                {
-                    for (int y = 0; y < btn.GetLength(1); y++)
-                    {
-                        btn[x, y] = new Button();
-                        btn[x, y].SetBounds(50 + 100 * x, 50 + 100 * y, 100, 100);
-                        newForm.Controls.Add(btn[x, y]);
-                        btn[x, y].FlatStyle = FlatStyle.Flat;
-                        btn[x, y].BackColor = Color.Gray;
-                    }
-                }
-                newForm.ShowDialog();
-            }
-            else if (diff == 1)
-            {
-                btn = new Button[6, 6];
-                for (int x = 0; x < btn.GetLength(0); x++)
-                {
-                    for (int y = 0; y < btn.GetLength(1); y++)
-                    {
-                        btn[x, y] = new Button();
-                        btn[x, y].SetBounds(50 + 75 * x, 50 + 75 * y, 75, 75);
-                        newForm.Controls.Add(btn[x, y]);
-                        btn[x, y].FlatStyle = FlatStyle.Flat;
-                        btn[x, y].BackColor = Color.Gray;
-                    }
-                }
-                newForm.ShowDialog();
-            }
-            else if (diff == 2)
-            {
-                btn = new Button[9, 9];
-                for (int x = 0; x < btn.GetLength(0); x++)
-                {
-                    for (int y = 0; y < btn.GetLength(1); y++)
-                    {
-                        btn[x, y] = new Button();
-                        btn[x, y].SetBounds(50 + 50 * x, 50 + 50 * y, 50, 50);
-                        newForm.Controls.Add(btn[x, y]);
-                        btn[x, y].FlatStyle = FlatStyle.Flat;
-                        btn[x, y].BackColor = Color.Gray;
-                    }
-                }
-                newForm.ShowDialog();
-            }
-
-        }
-
-
     }
 }

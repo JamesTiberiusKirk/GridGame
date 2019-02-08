@@ -40,8 +40,9 @@
             this.mediumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnNew = new System.Windows.Forms.Button();
             this.scoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LblTimer = new System.Windows.Forms.Label();
+            this.LblTimerLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,7 +51,7 @@
             this.BtnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnExit.Font = new System.Drawing.Font("Copperplate Gothic Bold", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnExit.Location = new System.Drawing.Point(996, 919);
-            this.BtnExit.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.BtnExit.Margin = new System.Windows.Forms.Padding(6);
             this.BtnExit.Name = "BtnExit";
             this.BtnExit.Size = new System.Drawing.Size(161, 72);
             this.BtnExit.TabIndex = 0;
@@ -135,7 +136,7 @@
             this.mediumToolStripMenuItem,
             this.hardToolStripMenuItem});
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(288, 34);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(164, 34);
             this.startToolStripMenuItem.Text = "Start";
             // 
             // easyToolStripMenuItem
@@ -162,34 +163,46 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(288, 34);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(164, 34);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.BtnExit_Click);
-            // 
-            // BtnNew
-            // 
-            this.BtnNew.Location = new System.Drawing.Point(816, 945);
-            this.BtnNew.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.BtnNew.Name = "BtnNew";
-            this.BtnNew.Size = new System.Drawing.Size(138, 42);
-            this.BtnNew.TabIndex = 6;
-            this.BtnNew.Text = "new";
-            this.BtnNew.UseVisualStyleBackColor = true;
-            this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
             // 
             // scoresToolStripMenuItem
             // 
             this.scoresToolStripMenuItem.Name = "scoresToolStripMenuItem";
-            this.scoresToolStripMenuItem.Size = new System.Drawing.Size(288, 34);
+            this.scoresToolStripMenuItem.Size = new System.Drawing.Size(164, 34);
             this.scoresToolStripMenuItem.Text = "Scores";
             this.scoresToolStripMenuItem.Click += new System.EventHandler(this.scoresToolStripMenuItem_Click);
+            // 
+            // LblTimer
+            // 
+            this.LblTimer.AutoSize = true;
+            this.LblTimer.Font = new System.Drawing.Font("Copperplate Gothic Bold", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblTimer.Location = new System.Drawing.Point(1125, 140);
+            this.LblTimer.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.LblTimer.Name = "LblTimer";
+            this.LblTimer.Size = new System.Drawing.Size(36, 34);
+            this.LblTimer.TabIndex = 10;
+            this.LblTimer.Text = "0";
+            // 
+            // LblTimerLabel
+            // 
+            this.LblTimerLabel.AutoSize = true;
+            this.LblTimerLabel.Font = new System.Drawing.Font("Copperplate Gothic Bold", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblTimerLabel.Location = new System.Drawing.Point(976, 140);
+            this.LblTimerLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.LblTimerLabel.Name = "LblTimerLabel";
+            this.LblTimerLabel.Size = new System.Drawing.Size(130, 34);
+            this.LblTimerLabel.TabIndex = 9;
+            this.LblTimerLabel.Text = "TIMER:";
             // 
             // GridGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1170, 1006);
-            this.Controls.Add(this.BtnNew);
+            this.Controls.Add(this.LblTimer);
+            this.Controls.Add(this.LblTimerLabel);
             this.Controls.Add(this.LblScoreCounter);
             this.Controls.Add(this.LblScoreTitle);
             this.Controls.Add(this.LblLivesCounter);
@@ -198,7 +211,7 @@
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "GridGame";
             this.Text = "GridGame";
             this.menuStrip1.ResumeLayout(false);
@@ -222,8 +235,9 @@
         private System.Windows.Forms.ToolStripMenuItem easyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mediumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hardToolStripMenuItem;
-        private System.Windows.Forms.Button BtnNew;
         private System.Windows.Forms.ToolStripMenuItem scoresToolStripMenuItem;
+        private System.Windows.Forms.Label LblTimer;
+        private System.Windows.Forms.Label LblTimerLabel;
     }
 }
 
