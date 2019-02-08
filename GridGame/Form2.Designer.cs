@@ -39,6 +39,7 @@
             this.inpBox.Name = "inpBox";
             this.inpBox.Size = new System.Drawing.Size(316, 29);
             this.inpBox.TabIndex = 0;
+            this.inpBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.inpBox_KeyDown);
             // 
             // button1
             // 

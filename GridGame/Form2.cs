@@ -35,15 +35,29 @@ namespace GridGame
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {   
-            if(string.IsNullOrEmpty(inpBox.Text) || string.IsNullOrWhiteSpace(inpBox.Text))
+        {
+            sendName();
+        }
+
+        private void sendName()
+        {
+            if (string.IsNullOrEmpty(inpBox.Text) || string.IsNullOrWhiteSpace(inpBox.Text))
             {
                 MessageBox.Show("Please enter your name into the field.");
                 return;
             }
             GridGame.userName = inpBox.Text;
             GridGame.WriteScoreToFile();
-           this.Hide();
+            this.Hide();
+        }
+
+
+        private void inpBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                sendName();
+            }
         }
     }
 }
