@@ -121,6 +121,7 @@ namespace GridGame
             t.Elapsed += eventHandler;
             t.Enabled = true;
             t.AutoReset = false;
+
         }
 
         private void CleanGrid(){
@@ -304,23 +305,7 @@ namespace GridGame
             fs.Close();
         }
 
-        //Timer stuff
 
-        // event to happen after 5 seconds
-        private void HideGrid(object sender, EventArgs e)
-        {
-            BlankGrid();
-            RandButton();
-        }
-
-        // event to happen after 10 seconds 
-        // if you can fix this / find a better way to do this please hit me up lmao
-        // currently does not work 
-        private void RevealGrid(object sender, EventArgs e)
-        {
-            MessageBox.Show("gunna try and hide the form now");
-            newForm.Hide();
-        }
 
         private void BlankGrid()
         {
@@ -383,10 +368,32 @@ namespace GridGame
         }
 
         //--------------------EVENT HANDLERS-------------------------------------
+        //Timer stuff
+
+        // event to happen after 5 seconds
+        private void HideGrid(object sender, EventArgs e)
+        {
+            BlankGrid();
+            RandButton();
+            timerRunning = false;
+        }
+
+        // event to happen after 10 seconds 
+        // if you can fix this / find a better way to do this please hit me up lmao
+        // currently does not work 
+        private void RevealGrid(object sender, EventArgs e)
+        {
+            MessageBox.Show("gunna try and hide the form now");
+            newForm.Hide();
+            timerRunning = false;
+        }
 
         //Any button click (From the grid)
         private void BtnEvent_Click(object sender, EventArgs e)
         {
+            if (timerRunning)
+                return;
+
             if (((Button)sender).BackColor==Color.Red){ //if button was already clicked
                 return;
             }   
@@ -404,6 +411,9 @@ namespace GridGame
         //The event handler for the correct button click
         private void RandButton_Click(object sender, EventArgs e)
         {
+            if (timerRunning)
+                return;
+
             if (((Button)sender).BackColor==Color.LightGreen){ //if button was already clicked
                 return;
             }   
@@ -414,6 +424,7 @@ namespace GridGame
             LblLivesCounter.Text = lives.ToString();
 
             MessageBox.Show("Succsess \nProceeed to Next Round.");
+            nextRound();
         }
 
         
