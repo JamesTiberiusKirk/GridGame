@@ -67,6 +67,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.inpBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "textBoxForm";
             this.Text = "Enter Username";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormClose);

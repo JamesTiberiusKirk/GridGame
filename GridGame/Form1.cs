@@ -60,7 +60,6 @@ namespace GridGame
         private static string difficulty;
         public static string userName;
         Color[] colours;
-        Form newForm = new Form();
 
         //difficulty int and game state
         //  0 = easy
@@ -71,6 +70,9 @@ namespace GridGame
         private int diff = 4;
         private bool timerRunning = false;
         private bool firstRun = true;
+
+        Form newForm = new Form();
+
 
         public GridGame()
         {
@@ -84,6 +86,10 @@ namespace GridGame
        
         private void LoadGrid(object sender, EventArgs e)
         {
+            colours = new Color[3];
+            colours[0] = Color.Goldenrod;
+            colours[1] = Color.MediumOrchid;
+            colours[2] = Color.CornflowerBlue;
 
             if (diff!=4){
                 if (MessageBox.Show("A Game is alreaady Running. \n Do you want to restart?", "Confirm", 
@@ -166,14 +172,8 @@ namespace GridGame
         
         //------------------------Different Game Modes---------------------------------
 
-        private void LoadEasy(){
-            diff = 0;
-            //Colours
-            colours = new Color[4];
-            colours[0] = Color.Goldenrod;
-            colours[1] = Color.MediumOrchid;
-            colours[2] = Color.CornflowerBlue;
-            colours[3] = Color.Coral;
+        private void LoadEasy()
+        {    
             btn = new Button[4,4];
             for (int x = 0; x < btn.GetLength(0); x++)
             {
@@ -189,15 +189,8 @@ namespace GridGame
             }
         }
 
-        private void LoadMedium(){
-            diff = 1;
-
-            colours = new Color[5];
-            colours[0] = Color.Goldenrod;
-            colours[1] = Color.MediumOrchid;
-            colours[2] = Color.CornflowerBlue;
-            colours[3] = Color.Coral;
-            colours[4] = Color.MediumSeaGreen;
+        private void LoadMedium()
+        {
             btn = new Button[6, 6];
             for (int x = 0; x < btn.GetLength(0); x++)
             {
@@ -208,24 +201,13 @@ namespace GridGame
                     btn[x, y].Click += new EventHandler(this.BtnEvent_Click);
                     Controls.Add(btn[x, y]);
                     btn[x, y].FlatStyle = FlatStyle.Flat;
-
-                    // btn[x, y].Text = rnd.Next(10, 99).ToString();
                     btn[x, y].BackColor = colours[rnd.Next(0, colours.Length)];
                 }
             }
         }
 
-        private void LoadHard(){
-            diff = 2;
-
-            colours = new Color[6];
-            colours[0] = Color.Goldenrod;
-            colours[1] = Color.MediumOrchid;
-            colours[2] = Color.CornflowerBlue;
-            colours[3] = Color.Coral;
-            colours[4] = Color.MediumSeaGreen;
-            colours[5] = Color.Firebrick;
-
+        private void LoadHard()
+        {
             btn = new Button[9, 9];
             for (int x = 0; x < btn.GetLength(0); x++)
             {
@@ -236,9 +218,7 @@ namespace GridGame
                     btn[x, y].Click += new EventHandler(this.BtnEvent_Click);
                     Controls.Add(btn[x, y]);
                     btn[x, y].FlatStyle = FlatStyle.Flat;
-
                     btn[x, y].BackColor = colours[rnd.Next(0, colours.Length)];
-                    // btn[x, y].Text = rnd.Next(100, 999).ToString();
                 }
             }
         }
@@ -256,7 +236,6 @@ namespace GridGame
 
             //btn[x, y].BackColor = Color.Black;
 
-            //If you chose another colour then the game just turns into a wack-a-mole
             Color randColour;
             do {
                 randColour = colours[rnd.Next(0, colours.Length)];
@@ -264,16 +243,18 @@ namespace GridGame
             btn[x, y].BackColor = randColour;
 
             btn[x, y].Click += new EventHandler(this.RandButton_Click);
+            btn[x, y].Click -= BtnEvent_Click;
         }
 
-        private void AskUserName(){
-
+        private void AskUserName()
+        {
             textBoxForm userNameForm = new textBoxForm();
             userNameForm.Show();
             userNameForm = null;
         }
 
-        public static void WriteScoreToFile(){
+        public static void WriteScoreToFile()
+        {
             string toWrite;
             toWrite = "\n" + userName + " with score " + score.ToString() +
                 " on " + difficulty +" difficulty";
@@ -287,29 +268,24 @@ namespace GridGame
             
             FileStream fs;
 
-            if (!File.Exists(path)){
+            if (!File.Exists(path))
+            {
                 fs = new FileStream(path, FileMode.Create);
-            }else{
+            }
+            else
+            {
                 fs = new FileStream(path,FileMode.Append);
             }
 
             byte[] info = new UTF8Encoding(true).GetBytes(toWrite);
-            //byte[] info = Encoding.Default.GetBytes(toWrite);
             fs.Write(info, 0, info.Length);
-            /* 
-            // writing data in bytes already
-            byte[] data = new byte[] { 0x0 };
-            fs.Write(data, 0, data.Length);
-            */
+           
             fs.Flush();
             fs.Close();
         }
 
-
-
         private void BlankGrid()
         {
-
             newForm.Width = this.Width;
             newForm.Height = this.Height;
             newForm.StartPosition = FormStartPosition.Manual;
@@ -363,11 +339,20 @@ namespace GridGame
                 }
             }
             newForm.Show(); 
-            MessageBox.Show("about to call the timer");
-            Timer(5, new ElapsedEventHandler(RevealGrid));
+            Timer(2, new ElapsedEventHandler(RevealGrid));
         }
 
         //--------------------EVENT HANDLERS-------------------------------------
+        
+        private void scoresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form3 scoreBoard = new Form3();
+            scoreBoard.Show();
+            scoreBoard.readFile();
+            scoreBoard = null;
+        }    
+            
+            
         //Timer stuff
 
         // event to happen after 5 seconds
@@ -383,7 +368,6 @@ namespace GridGame
         // currently does not work 
         private void RevealGrid(object sender, EventArgs e)
         {
-            MessageBox.Show("gunna try and hide the form now");
             newForm.Hide();
             timerRunning = false;
         }
@@ -414,12 +398,12 @@ namespace GridGame
             if (timerRunning)
                 return;
 
-            if (((Button)sender).BackColor==Color.LightGreen){ //if button was already clicked
+            if (((Button)sender).BackColor==Color.LightGreen) //if button was already clicked
                 return;
-            }   
+               
             ((Button)sender).BackColor = Color.LightGreen;
             score++;
-            lives++;
+            //lives++;
             LblScoreCounter.Text = score.ToString();
             LblLivesCounter.Text = lives.ToString();
 
@@ -427,14 +411,12 @@ namespace GridGame
             nextRound();
         }
 
-        
-
         private void BtnExit_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-
+        // for creating a form which hides the grid
         private void BtnNew_Click(object sender, EventArgs e)
         {
             Form newForm = new Form();
@@ -494,51 +476,8 @@ namespace GridGame
                 newForm.ShowDialog();
             }
 
-
         }
-
-        //Some code snippiets I was keeping on the side
-        /*switch (diff)
-        {
-            case 0: //easy
-                break;
-            case 1: //medium
-                break;
-            case 2: //hard
-                break;
-            case 3: //waiting period
-                break;
-        }*/
-
-        /*            if (File.Exists(path))
-                    {
-                        using (var sw = new StreamWriter(path, true))
-                        {
-                            byte[] info = new UTF8Encoding(true).GetBytes(toWrite);
-                            fs.Write(info, 0, info.Length);
-
-                            // writing data in bytes already
-                            byte[] data = new byte[] { 0x0 };
-                            fs.Write(data, 0, data.Length);
-                        }
-                    }
-                    else
-                    { 
-                        using (FileStream fs = File.Create(path))
-                        {
-                            byte[] info = new UTF8Encoding(true).GetBytes(toWrite);
-                            fs.Write(info, 0, info.Length);
-
-                            // writing data in bytes already
-                            byte[] data = new byte[] { 0x0 };
-                            fs.Write(data, 0, data.Length);
-                        }
-                    }
-        */
-
 
 
     }
-
- 
 }
