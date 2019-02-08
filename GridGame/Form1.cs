@@ -22,7 +22,7 @@ https://stackoverflow.com/questions/12535722/what-is-the-best-way-to-implement-a
 https://docs.microsoft.com/en-us/dotnet/api/system.timers.timer?redirectedfrom=MSDN&view=netframework-4.7.2
 https://stackoverflow.com/questions/218732/how-do-i-execute-code-after-a-form-has-loaded
 https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.form.shown?redirectedfrom=MSDN&view=netframework-4.7.2
-
+https://stackoverflow.com/questions/6191576/seconds-countdown-timer
 
 */
 
@@ -282,12 +282,11 @@ namespace GridGame
             userNameForm.Show();
             userNameForm = null;
         }
-
         public static void WriteScoreToFile()
         {
             string toWrite;
-            toWrite = "\n" + userName + " with score " + score.ToString() +
-                " on " + difficulty +" difficulty";
+            toWrite = userName + " with score " + score.ToString() +
+                " on " + difficulty +" difficulty" +"\n";
             MessageBox.Show(toWrite);
             
             string path = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).FullName;
@@ -399,7 +398,6 @@ namespace GridGame
         private void RevealGrid(object sender, EventArgs e)
         {
             newForm.Hide();
-            newForm = null;
             timerRunning = false;
         }
 
@@ -445,6 +443,24 @@ namespace GridGame
         private void BtnExit_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            /*
+            * Event handler for when the About button is clicked in the strip menu 
+            */
+            MessageBox.Show("MEMORY GAME" + "\n" +
+                "--------------------------------------------------------------------------------------------" + "\n" +
+                "This game is all about testing your memory." + "\n" +
+                "You will be shown a colourful grid for 5 seconds. This grid will then disappear & reappear again moments later." + "\n" +
+                "When the grid reappears, one of the coloured buttons will have changed colours." + "\n" +
+                "It is your job to remember which one has changed!" + "\n" + "\n" +
+                "Click a WRONG button and it will turn RED," + "\n" +
+                "Click the RIGHT button and it will turn GREEN!" + "\n" + "\n" +
+                "You only have 3 lives" + "\n" +
+                "--------------------------------------------------------------------------------------------" + "\n" +
+                "GOOD LUCK!");
         }
     }
 }

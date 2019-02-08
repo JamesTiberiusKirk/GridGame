@@ -27,7 +27,8 @@ namespace GridGame
         public textBoxForm()
         {
             InitializeComponent();
-
+            
+            //more stuff to disable the X button
             IntPtr hMenu = GetSystemMenu(this.Handle, false);
             int menuItemCount = GetMenuItemCount(hMenu);
             RemoveMenu(hMenu, menuItemCount - 1, MF_BYPOSITION);
@@ -41,11 +42,8 @@ namespace GridGame
                 return;
             }
             GridGame.userName = inpBox.Text;
-            this.Hide();
-        }
-        private void FormClose(object sender, FormClosedEventArgs e)
-        {
             GridGame.WriteScoreToFile();
+           this.Hide();
         }
     }
 }

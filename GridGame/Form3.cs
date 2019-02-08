@@ -35,6 +35,7 @@ namespace GridGame
                     scoreBox.Items.Add(line);
                 }
             }
+            fs.Close();
         }
     }
 }

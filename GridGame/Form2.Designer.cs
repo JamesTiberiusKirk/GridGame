@@ -70,7 +70,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "textBoxForm";
             this.Text = "Enter Username";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormClose);
             this.ResumeLayout(false);
             this.PerformLayout();
 
