@@ -21,7 +21,7 @@ namespace GridGame
         private void button1_Click(object sender, EventArgs e)
         {
             GridGame.userName = inpBox.Text;
-            this.Close();
+            this.Hide();
         }
         private void FormClose(object sender, FormClosedEventArgs e)
         {
